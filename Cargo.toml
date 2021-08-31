@@ -1,0 +1,26 @@
+[package]
+name = "secwords"
+version = "0.1.0"
+authors = ["just-do-halee <just.do.halee@gmail.com>"]
+homepage = "https://github.com/just-do-halee/secwords"
+repository = "https://github.com/just-do-halee/secwords"
+documentation = "https://docs.rs/secwords"
+
+description = "secure and safe password (temporary) container."
+
+readme = "README.md"
+
+keywords = ["algorithms", "security", "temporary", "password"]
+categories = ["cryptography", "algorithms", "no-std"]
+
+license = "MIT OR Apache-2.0"
+edition = "2018"
+
+[features]
+default = ["alloc", "unicode-normalization", "zeroize"]
+alloc = []
+std = ["unicode-normalization/default", "zeroize"]
+
+[dependencies]
+unicode-normalization = { version = "0.1.19", default-features = false, optional = true }
+zeroize =  { version = "1.4.1", optional = true }
