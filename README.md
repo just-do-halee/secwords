@@ -27,7 +27,7 @@ secure and safe password (temporary) container.
 
 ```toml
 [dependencies]
-secwords = "0.1.0"
+secwords = "0.1.1"
 ```
 
 ---

@@ -24,16 +24,17 @@
 #![no_std]
 
 #[cfg(feature = "alloc")]
-#[macro_use]
 extern crate alloc;
 
 mod password;
 pub use password::Password;
 
+extern crate anyhow;
+
 #[cfg(test)]
 mod tests {
-    use super::*;
-    use alloc::string::String;
+    use super::Password;
+    use alloc::{format, string::String};
     use core::str;
     #[test]
     fn validator() {

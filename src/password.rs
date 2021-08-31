@@ -2,7 +2,10 @@
 // Copyright 2021 Hwakyeom Kim(=just-do-halee)
 
 #[cfg(feature = "alloc")]
-use alloc::string::{String, ToString};
+use alloc::{
+    format,
+    string::{String, ToString},
+};
 
 #[cfg(feature = "default")]
 use core::{
@@ -36,13 +39,13 @@ pub struct Password<const MIN_LENGTH: usize> {
 }
 
 impl<const MIN_LENGTH: usize> Password<MIN_LENGTH> {
-    pub fn new<T: AsRef<str>>(plain_words: T) -> Result<Self, String> {
+    pub fn new<T: AsRef<str>>(plain_words: T) -> Result<Self, anyhow::Error> {
         let words = plain_words.as_ref();
         if words.len() < MIN_LENGTH {
-            return Err(format!(
+            return Err(anyhow::anyhow!(
                 "password must be more than {} length bytes. you are {}",
                 MIN_LENGTH,
-                words.len()
+                words.len(),
             ));
         }
         Ok(Self {
@@ -55,7 +58,7 @@ impl<const MIN_LENGTH: usize> Password<MIN_LENGTH> {
 }
 
 impl<const MIN_LENGTH: usize> FromStr for Password<MIN_LENGTH> {
-    type Err = String;
+    type Err = anyhow::Error;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         Self::new(s)
     }

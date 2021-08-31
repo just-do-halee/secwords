@@ -1,6 +1,6 @@
 [package]
 name = "secwords"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["just-do-halee <just.do.halee@gmail.com>"]
 homepage = "https://github.com/just-do-halee/secwords"
 repository = "https://github.com/just-do-halee/secwords"
@@ -17,10 +17,11 @@ license = "MIT OR Apache-2.0"
 edition = "2018"
 
 [features]
-default = ["alloc", "unicode-normalization", "zeroize"]
+default = ["alloc", "unicode-normalization", "zeroize", "anyhow"]
 alloc = []
-std = ["unicode-normalization/default", "zeroize"]
+std = ["unicode-normalization/default", "zeroize", "anyhow/default"]
 
 [dependencies]
 unicode-normalization = { version = "0.1.19", default-features = false, optional = true }
 zeroize =  { version = "1.4.1", optional = true }
+anyhow = { version = "1.0", default-features = false, optional = true }
