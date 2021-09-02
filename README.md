@@ -27,7 +27,14 @@ secure and safe password (temporary) container.
 
 ```toml
 [dependencies]
-secwords = "0.1.1"
+secwords = "1.0.0"
+```
+
+or
+
+```toml
+[dependencies]
+secwords = { version = "1.0.0", default-features = false } # no-std
 ```
 
 ---
@@ -36,11 +43,16 @@ secwords = "0.1.1"
 ## `How to`
 ```rust
 use secwords::Password;
+use sha2::Sha256;
 
-let pass1 = Password::<6>::new("12345678").unwrap(); // min length = 6
-let pass2: Password<6> = "12345678".parse().unwrap();
+let plain = String::from("pa5$wOrs"); // <- example
+
+let pass1 = Password::<Sha256, 6>::new(plain).unwrap(); // min length = 6
+let pass2: Password<Sha256, 6> = "pa5$wOrs".parse().unwrap();
 
 assert_eq!(pass1, pass2);
-assert_eq!(pass1, "12345678");
+
+assert_eq!(pass1, "pa5$wOrs");
+assert_eq!(pass1, String::from("pa5$wOrs"));
 ```
 there are more examples in the `lib.rs`

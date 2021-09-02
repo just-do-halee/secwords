@@ -1,6 +1,6 @@
 [package]
 name = "secwords"
-version = "0.1.1"
+version = "1.0.0"
 authors = ["just-do-halee <just.do.halee@gmail.com>"]
 homepage = "https://github.com/just-do-halee/secwords"
 repository = "https://github.com/just-do-halee/secwords"
@@ -17,11 +17,23 @@ license = "MIT OR Apache-2.0"
 edition = "2018"
 
 [features]
-default = ["alloc", "unicode-normalization", "zeroize", "anyhow"]
-alloc = []
-std = ["unicode-normalization/default", "zeroize", "anyhow/default"]
+default = ["std"]
+std = [
+    "unicode-normalization/default",
+    "utils-results/default",
+    "vep/default"
+    ]
 
 [dependencies]
-unicode-normalization = { version = "0.1.19", default-features = false, optional = true }
-zeroize =  { version = "1.4.1", optional = true }
-anyhow = { version = "1.0", default-features = false, optional = true }
+zeroize = { version = "1.4.1" }
+digest = { version = "0.9.0" }
+vep = { version = "1.0.1", default-features = false }
+utils-results = { version = "5.2.1", default-features = false }
+unicode-normalization = { version = "0.1.19", default-features = false }
+
+[dev-dependencies]
+console = "0.14.1"
+sha2 = "0.9.6"
+
+[package.metadata.docs.rs]
+no-deps = true
