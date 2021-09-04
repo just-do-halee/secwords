@@ -1,3 +1,11 @@
+## 1.1.0 (September 4, 2021)
+
+### Release 1.1.0
+* impl AsRef<Vec\<u8\>> to AsRef\<[u8]\>
+* document update
+
+---
+
 ## 1.0.0 (September 3, 2021)
 
 ### Release 1.0.0

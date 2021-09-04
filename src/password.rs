@@ -101,8 +101,8 @@ impl<D: Digest, const MIN_LENGTH: usize> FromStr for Password<D, MIN_LENGTH> {
     }
 }
 
-impl<D: Digest, const MIN_LENGTH: usize> AsRef<Vec<u8>> for Password<D, MIN_LENGTH> {
-    fn as_ref(&self) -> &Vec<u8> {
+impl<D: Digest, const MIN_LENGTH: usize> AsRef<[u8]> for Password<D, MIN_LENGTH> {
+    fn as_ref(&self) -> &[u8] {
         &self.hashed_words
     }
 }

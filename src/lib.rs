@@ -11,17 +11,23 @@
 //! ## Example
 //! ```rust
 //! use secwords::Password;
-//! use sha2::Sha256;
+//! use sha2::Sha256; // can be any hasher from dyn Digest `digest` crate
 //!
 //! let plain = String::from("pa5$wOrs"); // <- example
 //!
 //! let pass1 = Password::<Sha256, 6>::new(plain).unwrap(); // min length = 6
 //! let pass2: Password<Sha256, 6> = "pa5$wOrs".parse().unwrap();
 //!
-//! assert_eq!(pass1, pass2);
+//! assert_eq!(pass1, pass2); // they are hashed, original is gone(safely)
+//! assert_eq!(pass1.as_ref(), pass2.as_slice());
+//! assert_eq!(pass1.to_vec(), pass2.to_vec());
 //!
 //! assert_eq!(pass1, "pa5$wOrs");
 //! assert_eq!(pass1, String::from("pa5$wOrs"));
+//! assert_eq!(&pass1.to_hex().unwrap()[..20], "ed2757c9f4480697d789");
+//! assert_eq!(pass1.to_hex().unwrap().len(), 512); // vep implementation
+//! assert_eq!(format!("{}", pass1), "***SECURE***"); // display
+//! assert_eq!(format!("{:?}", pass1), "***SECURE***"); // debug
 //! ```
 //! there are more examples in the `lib.rs`
 
@@ -58,10 +64,13 @@ mod tests {
     }
     #[test]
     fn equals() {
-        let password = Password::<Sha256, 3>::new("1234".to_string()).unwrap();
-        assert_eq!(password, String::from("1234"));
-        assert_eq!(password, "1234".parse::<Password<Sha256, 3>>().unwrap());
-        assert_eq!(password, "1234");
+        let password1 = Password::<Sha256, 3>::new("1234".to_string()).unwrap();
+        let password2: Password<Sha256, 3> = "1234".parse().unwrap();
+        assert_eq!(password1, password2);
+        assert_eq!(password1.as_ref(), password2.as_slice());
+        assert_eq!(password1.to_vec(), password2.to_vec());
+        assert_eq!(password1, "1234");
+        assert_eq!(password1, String::from("1234"));
     }
     #[test]
     fn display() {

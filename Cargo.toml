@@ -1,6 +1,6 @@
 [package]
 name = "secwords"
-version = "1.0.0"
+version = "1.1.0"
 authors = ["just-do-halee <just.do.halee@gmail.com>"]
 homepage = "https://github.com/just-do-halee/secwords"
 repository = "https://github.com/just-do-halee/secwords"
