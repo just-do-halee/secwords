@@ -27,14 +27,14 @@ secure and safe password (temporary) container.
 
 ```toml
 [dependencies]
-secwords = "1.1.0"
+secwords = "1.1.1"
 ```
 
 or
 
 ```toml
 [dependencies]
-secwords = { version = "1.1.0", default-features = false } # no-std
+secwords = { version = "1.1.1", default-features = false } # no-std
 ```
 
 ---

@@ -1,3 +1,10 @@
+## 1.1.1 (September 4, 2021)
+
+### Release 1.1.1
+* Cargo.toml fix
+
+---
+
 ## 1.1.0 (September 4, 2021)
 
 ### Release 1.1.0
