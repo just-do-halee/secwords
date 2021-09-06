@@ -27,14 +27,14 @@ secure and safe password (temporary) container.
 
 ```toml
 [dependencies]
-secwords = "1.1.1"
+secwords = "2.0.0"
 ```
 
 or
 
 ```toml
 [dependencies]
-secwords = { version = "1.1.1", default-features = false } # no-std
+secwords = { version = "2.0.0", default-features = false } # no-std
 ```
 
 ---
@@ -56,7 +56,7 @@ assert_eq!(pass1.to_vec(), pass2.to_vec());
 
 assert_eq!(pass1, "pa5$wOrs");
 assert_eq!(pass1, String::from("pa5$wOrs"));
-assert_eq!(&pass1.to_hex().unwrap()[..20], "ed2757c9f4480697d789");
+assert_eq!(&pass1.to_hex().unwrap()[..20], "923482c5795a1ce3ee33");
 assert_eq!(pass1.to_hex().unwrap().len(), 512); // vep implementation
 assert_eq!(format!("{}", pass1), "***SECURE***"); // display
 assert_eq!(format!("{:?}", pass1), "***SECURE***"); // debug

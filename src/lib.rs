@@ -24,7 +24,7 @@
 //!
 //! assert_eq!(pass1, "pa5$wOrs");
 //! assert_eq!(pass1, String::from("pa5$wOrs"));
-//! assert_eq!(&pass1.to_hex().unwrap()[..20], "ed2757c9f4480697d789");
+//! assert_eq!(&pass1.to_hex().unwrap()[..20], "923482c5795a1ce3ee33");
 //! assert_eq!(pass1.to_hex().unwrap().len(), 512); // vep implementation
 //! assert_eq!(format!("{}", pass1), "***SECURE***"); // display
 //! assert_eq!(format!("{:?}", pass1), "***SECURE***"); // debug

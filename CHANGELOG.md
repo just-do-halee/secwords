@@ -1,3 +1,10 @@
+## 2.0.0 (September 6, 2021)
+
+### Release 2.0.0
+* vep version 2
+
+---
+
 ## 1.1.1 (September 4, 2021)
 
 ### Release 1.1.1
