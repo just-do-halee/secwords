@@ -1,12 +1,12 @@
 [package]
 name = "secwords"
-version = "2.1.0"
+version = "2.1.1"
 authors = ["just-do-halee <just.do.halee@gmail.com>"]
 homepage = "https://github.com/just-do-halee/secwords"
 repository = "https://github.com/just-do-halee/secwords"
 documentation = "https://docs.rs/secwords"
 
-description = "secure and safe password (temporary) container."
+description = "secure and safe password container."
 
 readme = "README.md"
 

@@ -1,4 +1,11 @@
-## 2.1.0 (September 6, 2021)
+## 2.1.1 (September 7, 2021)
+
+### Release 2.1.1
+* support edition 2015
+
+---
+
+## 2.1.0 (September 7, 2021)
 
 ### Release 2.1.0
 * fixed size vep (expanded and reduced) implemented

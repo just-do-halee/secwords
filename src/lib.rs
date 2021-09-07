@@ -10,6 +10,7 @@
 //! <br>(no-std support)
 //! ## Example
 //! ```rust
+//! # extern crate sha2;
 //! use secwords::Password;
 //! use sha2::Sha256; // can be any hasher from dyn Digest `digest` crate
 //!
@@ -44,18 +45,20 @@
 
 extern crate alloc;
 
-#[cfg(feature = "std")]
-extern crate std;
-
 mod password;
 pub use password::Password;
 
+extern crate hex;
+extern crate unicode_normalization;
 extern crate utils_results;
+extern crate vep;
+extern crate zeroize;
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use sha2::Sha256;
+    extern crate sha2;
+    use self::sha2::Sha256;
 
     #[test]
     fn validator() {
