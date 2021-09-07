@@ -3,7 +3,7 @@
 
 //! # `Secwords`
 //!
-//! secure and safe password (temporary) container.
+//! secure and safe password container.
 //! - typed system
 //! - memory safety
 //! - unicode safety
@@ -19,15 +19,23 @@
 //! let pass2: Password<Sha256, 6> = "pa5$wOrs".parse().unwrap();
 //!
 //! assert_eq!(pass1, pass2); // they are hashed, original is gone(safely)
+//! assert_eq!(pass1.len(), 32); // fixed size `vep`(crate)
 //! assert_eq!(pass1.as_ref(), pass2.as_slice());
 //! assert_eq!(pass1.to_vec(), pass2.to_vec());
 //!
 //! assert_eq!(pass1, "pa5$wOrs");
 //! assert_eq!(pass1, String::from("pa5$wOrs"));
-//! assert_eq!(&pass1.to_hex().unwrap()[..20], "923482c5795a1ce3ee33");
-//! assert_eq!(pass1.to_hex().unwrap().len(), 512); // vep implementation
+//! assert_eq!(&pass1.to_hex().unwrap()[..20], "0f521249b366dd6e0acc");
 //! assert_eq!(format!("{}", pass1), "***SECURE***"); // display
 //! assert_eq!(format!("{:?}", pass1), "***SECURE***"); // debug
+//!
+//! let bytes = pass1.to_bytes(); // encode
+//! let pass3 = Password::<Sha256, 6>::from_bytes(bytes).unwrap(); // decode
+//! assert_eq!(pass1, pass3);
+//!
+//! let hex_string = pass1.to_hex().unwrap(); // encode
+//! let pass3 = Password::<Sha256, 6>::from_hex(hex_string).unwrap(); // decode
+//! assert_eq!(pass1, pass3);
 //! ```
 //! there are more examples in the `lib.rs`
 
@@ -55,6 +63,20 @@ mod tests {
         assert!("123456".parse::<Password<Sha256, 6>>().is_ok());
         assert!("이도하".parse::<Password<Sha256, 10>>().is_err());
         assert!("이도하".parse::<Password<Sha256, 9>>().is_ok());
+    }
+    #[test]
+    fn encode_decode() {
+        // bytes
+        let password: Password<Sha256, 8> = "12345678".parse().unwrap();
+        let bytes = password.to_bytes();
+        assert_eq!(password.as_slice(), bytes.as_slice());
+        let new_password = Password::<Sha256, 8>::from_bytes(bytes).unwrap();
+        assert_eq!(password, new_password);
+
+        // hex string
+        let hex_string = password.to_hex().unwrap();
+        let new_password = Password::<Sha256, 8>::from_hex(hex_string).unwrap();
+        assert_eq!(password, new_password);
     }
     #[test]
     fn parser() {
@@ -95,8 +117,8 @@ mod tests {
     #[test]
     fn nested() {
         let first = Password::<Sha256, 5>::new("testman".to_string()).unwrap();
-        assert_eq!(224, first.len());
+        assert_eq!(32, first.len());
         let second = Password::<Sha256, 5>::new(first.to_hex().unwrap()).unwrap();
-        assert_eq!(14336, second.len());
+        assert_eq!(32, second.len());
     }
 }

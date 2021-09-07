@@ -3,7 +3,6 @@
 
 use alloc::{
     borrow::ToOwned,
-    fmt::Write,
     string::{String, ToString},
     vec::Vec,
 };
@@ -12,7 +11,7 @@ use utils_results::*;
 
 err! {
     InvalidLength => "invalid length:"
-    Write => "couldn't write:"
+    Parse => "parse error:"
 }
 
 #[cfg(not(feature = "std"))]
@@ -52,19 +51,29 @@ impl<D: Digest, const MIN_LENGTH: usize> Password<D, MIN_LENGTH> {
             digester: PhantomData,
         })
     }
-    pub fn eq_original<T: AsRef<str> + Zeroize>(&self, target: T) -> bool {
-        self.hashed_words == Self::extract_hashed_words(target).unwrap_or_default()
-    }
-    pub fn write_hex<W: Write>(&self, f: &mut W) -> Result<()> {
-        for byte in self.hashed_words.iter() {
-            errcast!(write!(f, "{:02x}", byte), err::Write);
+    pub fn from_bytes<T: AsRef<[u8]>>(bytes: T) -> Result<Self> {
+        if bytes.as_ref().len() != D::output_size() {
+            return errbang!(err::Parse, "invalid length");
         }
-        Ok(())
+        Ok(Self {
+            hashed_words: bytes.as_ref().to_vec(),
+            digester: PhantomData,
+        })
+    }
+    pub fn to_bytes(&self) -> Vec<u8> {
+        self.hashed_words.to_vec()
+    }
+    pub fn from_hex<T: AsRef<str>>(hex_string: T) -> Result<Self> {
+        Ok(Self {
+            hashed_words: errcast!(hex::decode(hex_string.as_ref()), err::Parse, "hex"),
+            digester: PhantomData,
+        })
     }
     pub fn to_hex(&self) -> Result<String> {
-        let mut buf = String::new();
-        self.write_hex(&mut buf)?;
-        Ok(buf)
+        Ok(hex::encode(self.hashed_words.as_slice()))
+    }
+    pub fn eq_original<T: AsRef<str> + Zeroize>(&self, target: T) -> bool {
+        self.hashed_words == Self::extract_hashed_words(target).unwrap_or_default()
     }
 
     #[inline]
@@ -82,7 +91,7 @@ impl<D: Digest, const MIN_LENGTH: usize> Password<D, MIN_LENGTH> {
         let mut normed_words = Self::utf8_normalize(words);
         plain_words.zeroize();
 
-        let hashed_words = Vep(D::new()).expand(&normed_words);
+        let hashed_words = Vep(D::new()).expand_and_then_reduce(&normed_words);
         normed_words.zeroize();
 
         Ok(hashed_words)

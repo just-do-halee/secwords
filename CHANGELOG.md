@@ -1,3 +1,12 @@
+## 2.1.0 (September 6, 2021)
+
+### Release 2.1.0
+* fixed size vep (expanded and reduced) implemented
+* from_bytes(), to_bytes(), from_hex(), to_hex() available
+* function write_hex() removed
+
+---
+
 ## 2.0.0 (September 6, 2021)
 
 ### Release 2.0.0

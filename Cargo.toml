@@ -1,6 +1,6 @@
 [package]
 name = "secwords"
-version = "2.0.0"
+version = "2.1.0"
 authors = ["just-do-halee <just.do.halee@gmail.com>"]
 homepage = "https://github.com/just-do-halee/secwords"
 repository = "https://github.com/just-do-halee/secwords"
@@ -21,14 +21,16 @@ default = ["std"]
 std = [
     "unicode-normalization/default",
     "utils-results/default",
-    "vep/default"
+    "vep/default",
+    "hex/default"
     ]
 
 [dependencies]
 zeroize = { version = "1.4.1" }
-vep = { version = "2.0.0", default-features = false }
+vep = { version = "2.1.0", default-features = false }
 utils-results = { version = "5.2.1", default-features = false }
 unicode-normalization = { version = "0.1.19", default-features = false }
+hex = { version = "0.4.3", default-features = false, features = ["alloc"] }
 
 [dev-dependencies]
 sha2 = "0.9.6"
